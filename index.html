@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Be My Valentine?</title>
+    <title>Valentine</title>
     <style>
         body {
             display: flex;
@@ -11,7 +11,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: pink;
+            background-color: rgb(252, 218, 223);
             font-family: Arial, sans-serif;
             text-align: center;
             overflow: hidden;
@@ -21,6 +21,8 @@
             color: red;
         }
         .buttons {
+            display: flex;
+            gap: 20px;
             position: relative;
             margin-top: 20px;
         }
@@ -30,6 +32,7 @@
             border: none;
             cursor: pointer;
             transition: 0.3s;
+            position: relative;
         }
         .yes {
             background-color: #ff4d4d;
@@ -38,42 +41,39 @@
         .no {
             background-color: #444;
             color: white;
-            position: absolute;
         }
     </style>
 </head>
 <body>
     <h1>Will you be my Valentine? ❤️</h1>
     <div class="buttons">
-        <button class="yes" onclick="alert('Yay! 💖')">Yes</button>
+        <button class="yes" onclick="window.location.href='ez.html'">Yes</button>
         <button class="no" onmouseover="moveButton()">No</button>
     </div>
 
     <script>
         function moveButton() {
             const button = document.querySelector('.no');
-            const rect = button.getBoundingClientRect();
-            const maxX = window.innerWidth - rect.width - 20;
-            const maxY = window.innerHeight - rect.height - 20;
-            let x, y;
-            do {
-                x = Math.random() * maxX;
-                y = Math.random() * maxY;
-            } while (x + rect.width > window.innerWidth || y + rect.height > window.innerHeight);
+            const offset = 50 + Math.random() * 50;
+            const directionX = Math.random() < 0.5 ? -1 : 1;
+            const directionY = Math.random() < 0.5 ? -1 : 1;
+
+            const currentLeft = button.offsetLeft;
+            const currentTop = button.offsetTop;
+
+            const newLeft = Math.max(0, Math.min(window.innerWidth - button.offsetWidth, currentLeft + directionX * offset));
+            const newTop = Math.max(0, Math.min(window.innerHeight - button.offsetHeight, currentTop + directionY * offset));
             
             const newYesButton = document.createElement("button");
             newYesButton.innerText = "Yes";
             newYesButton.classList.add("yes");
             newYesButton.style.position = "absolute";
-            newYesButton.style.left = `${rect.left}px`;
-            newYesButton.style.top = `${rect.top}px`;
+            newYesButton.style.left = `${currentLeft}px`;
+            newYesButton.style.top = `${currentTop}px`;
             newYesButton.onclick = () => alert('Yay! 💖');
             
-            document.body.appendChild(newYesButton);
-            
-            button.style.position = 'absolute';
-            button.style.left = `${x}px`;
-            button.style.top = `${y}px`;
+            button.style.left = `${newLeft}px`;
+            button.style.top = `${newTop}px`;
         }
     </script>
 </body>
