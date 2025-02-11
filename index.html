@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: pink;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+        h1 {
+            color: red;
+        }
+        .buttons {
+            position: relative;
+            margin-top: 20px;
+        }
+        button {
+            font-size: 20px;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .yes {
+            background-color: #ff4d4d;
+            color: white;
+        }
+        .no {
+            background-color: #444;
+            color: white;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <h1>Will you be my Valentine? ❤️</h1>
+    <div class="buttons">
+        <button class="yes" onclick="alert('Yay! 💖')">Yes</button>
+        <button class="no" onmouseover="moveButton()">No</button>
+    </div>
+
+    <script>
+        function moveButton() {
+            const button = document.querySelector('.no');
+            const rect = button.getBoundingClientRect();
+            const maxX = window.innerWidth - rect.width - 20;
+            const maxY = window.innerHeight - rect.height - 20;
+            let x, y;
+            do {
+                x = Math.random() * maxX;
+                y = Math.random() * maxY;
+            } while (x + rect.width > window.innerWidth || y + rect.height > window.innerHeight);
+            
+            const newYesButton = document.createElement("button");
+            newYesButton.innerText = "Yes";
+            newYesButton.classList.add("yes");
+            newYesButton.style.position = "absolute";
+            newYesButton.style.left = `${rect.left}px`;
+            newYesButton.style.top = `${rect.top}px`;
+            newYesButton.onclick = () => alert('Yay! 💖');
+            
+            document.body.appendChild(newYesButton);
+            
+            button.style.position = 'absolute';
+            button.style.left = `${x}px`;
+            button.style.top = `${y}px`;
+        }
+    </script>
+</body>
+</html>
